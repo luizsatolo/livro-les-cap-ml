@@ -1,0 +1,28 @@
+# R / RStudio
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+.Rproj.user/
+*.Rproj
+
+# Saídas geradas localmente — manter pastas vazias via .gitkeep
+exemplo1-produtividade-soja/resultados_modelos/*
+!exemplo1-produtividade-soja/resultados_modelos/.gitkeep
+exemplo2-ebia-pof/resultados_modelos/*
+!exemplo2-ebia-pof/resultados_modelos/.gitkeep
+exemplo3-pronaf-dml/resultados_modelos/*
+!exemplo3-pronaf-dml/resultados_modelos/.gitkeep
+exemplo4-assistencia-tecnica-causal-forest/resultados_modelos/*
+!exemplo4-assistencia-tecnica-causal-forest/resultados_modelos/.gitkeep
+
+# Editores e IDEs
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
