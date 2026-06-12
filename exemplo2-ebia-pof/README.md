@@ -59,7 +59,7 @@ estratificado por `classe_ebia`) e avaliados nos 20% restantes.
 | # | Modelo | Especificação | O que captura |
 |---|---|---|---|
 | 1 | **Regressão logística multinomial** | `multinom(classe_ebia ~ ., ...)` (`nnet::multinom`) | Relações log-lineares entre covariáveis e classe; produz odds ratios diretamente interpretáveis. |
-| 2 | **Random Forest** | `ranger(classe_ebia ~ ., num.trees = 500, mtry = floor(sqrt(p)), ...)` (`ranger::ranger`) | Não-linearidades e interações entre variáveis; produz escores de importância (impurity). |
+| 2 | **Random Forest** | `ranger(classe_ebia ~ ., num.trees = 500, mtry = floor(sqrt(p)), ...)` (`ranger::ranger`) | Não-linearidades e interações entre variáveis; produz escores de importância por permutação. |
 
 **Métricas de avaliação** (no conjunto de teste): *accuracy*, *F1 macro*,
 *balanced accuracy macro* e *Kappa de Cohen*.
@@ -224,8 +224,8 @@ resumo:
 11. **Métricas comparativas** salvas em `metricas_classificacao.csv`.
 12. **Matrizes de confusão** dos dois modelos (csv + impressão em
     formato `yardstick::conf_mat`).
-13. **Importância de variáveis (RF)**: escores impurity, csv e gráfico
-    das 15 variáveis mais importantes.
+13. **Importância de variáveis (RF)**: escores de importância por
+    permutação, csv e gráfico das 15 variáveis mais importantes.
 14. **Odds ratios da logística** para as cinco variáveis mais
     importantes do RF: extração de coeficientes e erros-padrão,
     IC95% pelo método de Wald, exportação em csv e *forest plot* em
@@ -246,7 +246,7 @@ Todas as saídas são gravadas em `resultados_modelos/`:
 | `metricas_classificacao.csv` | Accuracy, F1 macro, Bal. accuracy e Kappa por modelo |
 | `matriz_confusao_logit.csv` | Matriz de confusão (verdade × previsto) da logística |
 | `matriz_confusao_rf.csv` | Matriz de confusão do Random Forest |
-| `importancia_variaveis_rf.csv` | Escore impurity por variável (decrescente) |
+| `importancia_variaveis_rf.csv` | Escore de importância por permutação, por variável (decrescente) |
 | `importancia_variaveis_rf.png` | Gráfico das 15 variáveis mais importantes |
 | `odds_ratios_logit.csv` | OR e IC95% das 5 variáveis mais importantes do RF |
 | `odds_ratios_logit.png` | Forest plot dos odds ratios |

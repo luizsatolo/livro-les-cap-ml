@@ -34,6 +34,8 @@
 #   - Valores ausentes em numéricas são imputados pela mediana.
 #   - Valores ausentes em fatores recebem o nível "Ignorado".
 #   - Split estratificado 80/20 (treino/teste) via caret::createDataPartition.
+#   - Importância das variáveis no Random Forest: importância por
+#     permutação (importance = "permutation" em ranger::ranger()).
 #   - Reprodutibilidade: set.seed(123) é executado uma vez no início do
 #     script e novamente imediatamente antes da partição treino/teste. O
 #     Random Forest recebe seed=123 explicitamente em ranger().
@@ -302,7 +304,7 @@ modelo_rf <- ranger::ranger(
   mtry          = max(1, floor(sqrt(p))),
   min.node.size = 10,
   probability   = FALSE,
-  importance    = "impurity",
+  importance    = "permutation",
   seed          = 123
 )
 
@@ -372,7 +374,7 @@ print(
 
 
 # =============================================================================
-# 13. Importância de variáveis (Random Forest)
+# 13. Importância de variáveis (Random Forest, por permutação)
 # =============================================================================
 
 importancia_rf <- tibble::tibble(
@@ -394,9 +396,9 @@ grafico_importancia <- importancia_rf |>
   ggplot2::geom_col() +
   ggplot2::coord_flip() +
   ggplot2::labs(
-    title = "Random Forest: importância das variáveis",
+    title = "Random Forest: importância das variáveis (permutação)",
     x     = "",
-    y     = "Escore de importância (impurity)"
+    y     = "Escore de importância (permutação)"
   ) +
   ggplot2::theme_minimal(base_size = 12)
 
