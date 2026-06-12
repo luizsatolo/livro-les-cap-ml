@@ -29,8 +29,8 @@
 #   - Unidade de análise: domicílio.
 #   - Excluem-se identificadores e variáveis do plano amostral (uf,
 #     estrato_pof, cod_upa, num_dom).
-#   - Renda domiciliar e per capita são expressas em R$ mil para facilitar
-#     a interpretação dos odds ratios.
+#   - Renda per capita é expressa em R$ mil para facilitar a
+#     interpretação dos odds ratios.
 #   - Valores ausentes em numéricas são imputados pela mediana.
 #   - Valores ausentes em fatores recebem o nível "Ignorado".
 #   - Split estratificado 80/20 (treino/teste) via caret::createDataPartition.
@@ -125,7 +125,7 @@ if (!("classe_ebia" %in% names(base))) {
 # - classe_ebia como fator com níveis em ordem crescente de gravidade.
 # - Remoção de identificadores e variáveis do plano amostral.
 # - Remoção de colunas totalmente NA.
-# - Conversão de renda para R$ mil (facilita interpretação dos OR).
+# - Conversão da renda per capita para R$ mil (facilita interpretação dos OR).
 # - Remoção de variáveis constantes.
 # =============================================================================
 
@@ -153,10 +153,9 @@ base_modelo <- base |>
 # Renda em R$ mil
 base_modelo <- base_modelo |>
   dplyr::mutate(
-    renda_mil     = renda_total     / 1000,
     percapita_mil = renda_percapita / 1000
   ) |>
-  dplyr::select(-renda_total, -renda_percapita)
+  dplyr::select(-renda_percapita)
 
 # Remove variáveis constantes (exceto a variável dependente)
 vars_constantes <- names(base_modelo)[
@@ -463,8 +462,8 @@ readr::write_csv(
 # Mapeamento de nomes de variáveis para rótulos legíveis no gráfico
 labels_termos <- c(
   percapita_mil = "Renda per capita (R$ mil)",
-  renda_mil     = "Renda domiciliar (R$ mil)",
   num_comodos   = "Número de cômodos",
+  num_banheiros = "Número de banheiros",
   num_moradores = "Número de moradores",
   fontes_renda  = "Número de fontes de renda"
 )

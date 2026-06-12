@@ -147,7 +147,7 @@ máquina (o Random Forest com 500 árvores é o passo mais demorado).
 ## A base de dados
 
 O arquivo `dados/base_ebia.csv` contém **57.920 domicílios** da Pesquisa
-de Orçamentos Familiares (POF) 2017-2018 do IBGE, com 17 variáveis:
+de Orçamentos Familiares (POF) 2017-2018 do IBGE, com 16 variáveis:
 
 - **Variável dependente** — `classe_ebia`, derivada do módulo EBIA
   aplicado na POF. As quatro classes seguem a definição oficial da
@@ -157,10 +157,9 @@ de Orçamentos Familiares (POF) 2017-2018 do IBGE, com 17 variáveis:
 - **Características do domicílio** — situação (urbano/rural), tipo de
   edificação, abastecimento de água, esgoto, destino do lixo, energia
   elétrica, número de cômodos, banheiros e moradores.
-- **Renda e fontes de rendimento** — renda domiciliar total e per capita
-  (em R$), número de fontes de rendimento. No script, ambas as rendas
-  são convertidas para R$ mil para facilitar a interpretação dos odds
-  ratios.
+- **Renda e fontes de rendimento** — renda per capita (em R$) e número
+  de fontes de rendimento. No script, a renda per capita é convertida
+  para R$ mil para facilitar a interpretação dos odds ratios.
 
 > **Fonte:** IBGE — POF 2017-2018, microdados abertos
 > (https://www.ibge.gov.br/estatisticas/sociais/saude/24786-pesquisa-de-orcamentos-familiares-2.html).
@@ -189,7 +188,6 @@ de Orçamentos Familiares (POF) 2017-2018 do IBGE, com 17 variáveis:
 | `num_comodos` | inteiro | preditor | Número de cômodos do domicílio | — |
 | `num_banheiros` | inteiro | preditor | Número de banheiros | — |
 | `num_moradores` | inteiro | preditor | Número de moradores | — |
-| `renda_total` | numérica | preditor (convertida) | Renda total do domicílio | R$ (convertida a R$ mil no script: `renda_mil`) |
 | `fontes_renda` | inteiro | preditor | Número de fontes de rendimento | — |
 | `renda_percapita` | numérica | preditor (convertida) | Renda per capita | R$ (convertida a R$ mil no script: `percapita_mil`) |
 
@@ -207,8 +205,8 @@ resumo:
 4. **Prepara os dados**: define `classe_ebia` como fator com ordem
    crescente de gravidade; exclui identificadores e variáveis do plano
    amostral (`uf`, `estrato_pof`, `cod_upa`, `num_dom`); converte
-   `renda_total` e `renda_percapita` para R$ mil (`renda_mil`,
-   `percapita_mil`); remove colunas totalmente NA e constantes.
+   `renda_percapita` para R$ mil (`percapita_mil`); remove colunas
+   totalmente NA e constantes.
 5. **Trata valores ausentes**: imputa mediana em variáveis numéricas e
    atribui o nível `"Ignorado"` aos NAs em fatores (exceto na variável
    dependente).
