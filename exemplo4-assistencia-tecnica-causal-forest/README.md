@@ -366,7 +366,15 @@ resumo:
 
 ## Saídas geradas
 
-Todas as saídas são gravadas em `resultados_modelos/`:
+Todas as saídas são gravadas em `resultados_modelos/`. O script reporta
+os resultados em **duas escalas**: a nativa do modelo (log-pontos) e a
+escala monetária (R$/ha), reexpressa pela transformação
+B·(exp(θ̂)−1), em que B = exp(mean(Y))·1.000 é a produtividade de
+referência (média geométrica amostral, em R$/ha). Erros-padrão em
+R$/ha são obtidos pelo método delta; limites do IC 95% são transformados
+diretamente pela monotonicidade da exponencial.
+
+**Em log-pontos:**
 
 | Arquivo | Conteúdo |
 |---|---|
@@ -380,6 +388,16 @@ Todas as saídas são gravadas em `resultados_modelos/`:
 | `cf_ate_por_subgrupo.csv` | CATE médio por macrorregião e quintis de escala |
 | `cf_cate_distribuicao.png` | Histograma da distribuição dos τ̂ |
 | `cf_cate_por_regiao.png` | Boxplot do CATE por macrorregião |
+
+**Em R$/ha (reexpressão monetária):**
+
+| Arquivo | Conteúdo |
+|---|---|
+| `cf_ate_reais.csv` | ATE/ATT/ATC em R$/ha (efeito, EP, IC95%) |
+| `cf_blp_reais.csv` | BLP em R$/ha (linearização B·coef em torno de θ = 0) |
+| `cf_cate_por_municipio_reais.csv` | CATE municipal em R$/ha (com EP e IC95%) |
+| `cf_ate_por_subgrupo_reais.csv` | CATE médio por macrorregião e quintis em R$/ha |
+| `cf_cate_por_regiao_reais.png` | Boxplot do CATE por macrorregião em R$/ha |
 
 ---
 

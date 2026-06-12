@@ -40,15 +40,24 @@
 #
 # Saídas (em resultados_modelos/)
 # -----------------------------------------------------------------------------
+# Resultados em log-pontos (escala nativa do modelo):
 #   base_cf_processada.csv         Base efetivamente usada no Causal Forest
-#   cf_ate.csv                     ATE (overall e por subamostras)
+#   cf_ate.csv                     ATE (overall, ATT, ATC)
 #   cf_calibration.csv             Teste de calibração (Athey-Wager)
 #   cf_variable_importance.csv     Importância das variáveis na partição causal
 #   cf_blp.csv                     Best Linear Projection do CATE em X
 #   cf_cate_por_municipio.csv      CATE estimado, EP e IC95% por município
 #   cf_ate_por_subgrupo.csv        ATE por região e por quintis de escala
+#   cf_propensity_overlap.csv      Distribuição do propensity score estimado
 #   cf_cate_distribuicao.png       Histograma da distribuição dos CATEs
 #   cf_cate_por_regiao.png         Boxplot do CATE por macrorregião
+#
+# Resultados em R$/ha (reexpressão via B·(exp(theta)-1), B = média geom.):
+#   cf_ate_reais.csv               ATE/ATT/ATC em R$/ha
+#   cf_blp_reais.csv               BLP em R$/ha (linearização)
+#   cf_cate_por_municipio_reais.csv  CATE municipal em R$/ha
+#   cf_ate_por_subgrupo_reais.csv  Subgrupos em R$/ha
+#   cf_cate_por_regiao_reais.png   Boxplot em R$/ha
 # =============================================================================
 
 
@@ -429,7 +438,108 @@ readr::write_csv(
 
 
 # =============================================================================
-# 11. Gráficos: distribuição do CATE e CATE por região
+# 11. Reexpressão em R$/ha (base = média geométrica amostral)
+# =============================================================================
+# Os efeitos do Causal Forest são estimados em log-pontos porque
+# Y = log(produtividade_agropecuaria). Para a leitura econômica
+# reexpressamos esses efeitos em R$/ha pela transformação multiplicativa
+#
+#     efeito_R$_ha = B * (exp(theta) - 1),
+#
+# em que B é a produtividade de referência. Adotamos como B a média
+# geométrica amostral da produtividade, B = exp(mean(Y)) — invariante a
+# mudanças de unidade e equivalente à mediana da produtividade quando a
+# distribuição é log-normal.
+#
+# Erros-padrão em R$/ha vêm do método delta:
+#     SE_R$_ha = B * exp(theta) * SE_theta.
+# Os limites do IC 95% são transformados diretamente pela monotonicidade
+# da exponencial. Os valores de z e p-valor permanecem inalterados — a
+# hipótese nula theta = 0 equivale a efeito = 0.
+#
+# OBS sobre unidades: na base original, produtividade_agropecuaria é
+# valor_producao (em R$ 1.000) dividido por area_estabelecimentos (ha),
+# portanto está em R$ mil/ha. Multiplicamos B por 1.000 para reportar
+# o efeito em R$/ha.
+# =============================================================================
+
+B_mil_ha   <- exp(mean(dados_cf$Y))
+B_reais_ha <- B_mil_ha * 1000  # R$ por hectare
+
+message("Base de referencia (media geometrica amostral):")
+message(sprintf("  B = R$ %.0f/ha", B_reais_ha))
+
+# --- Tabela 5.2 em R$/ha ---------------------------------------------------
+tabela_ate_reais <- tabela_ate |>
+  dplyr::mutate(
+    theta_reais  = B_reais_ha * (exp(theta) - 1),
+    se_reais     = B_reais_ha * exp(theta) * se,
+    ci_inf_reais = B_reais_ha * (exp(ci_inf) - 1),
+    ci_sup_reais = B_reais_ha * (exp(ci_sup) - 1)
+  ) |>
+  dplyr::select(amostra,
+                theta_reais, se_reais,
+                ci_inf_reais, ci_sup_reais,
+                z, p_valor)
+
+print(tabela_ate_reais)
+readr::write_csv(
+  tabela_ate_reais,
+  file.path(dir_resultados, "cf_ate_reais.csv")
+)
+
+# --- CATE municipal em R$/ha -----------------------------------------------
+cate_munic_reais <- cate_munic |>
+  dplyr::mutate(
+    tau_reais    = B_reais_ha * (exp(tau) - 1),
+    se_reais     = B_reais_ha * exp(tau) * se,
+    ci_inf_reais = B_reais_ha * (exp(ci_inf) - 1),
+    ci_sup_reais = B_reais_ha * (exp(ci_sup) - 1)
+  ) |>
+  dplyr::select(id_municipio, regiao, W,
+                tau_reais, se_reais, ci_inf_reais, ci_sup_reais)
+
+readr::write_csv(
+  cate_munic_reais,
+  file.path(dir_resultados, "cf_cate_por_municipio_reais.csv")
+)
+
+# --- BLP em R$/ha (linearizacao: marginal = B * coef em torno de theta = 0)
+blp_reais <- blp_df |>
+  dplyr::mutate(
+    coef_reais        = B_reais_ha * coeficiente,
+    erro_padrao_reais = B_reais_ha * erro_padrao
+  ) |>
+  dplyr::select(variavel,
+                coef_reais, erro_padrao_reais,
+                z, p_valor)
+
+print(blp_reais)
+readr::write_csv(
+  blp_reais,
+  file.path(dir_resultados, "cf_blp_reais.csv")
+)
+
+# --- Subgrupos (medias do CATE) em R$/ha -----------------------------------
+subgrupos_reais <- subgrupos |>
+  dplyr::mutate(
+    tau_medio_reais   = B_reais_ha * (exp(tau_medio)   - 1),
+    tau_p25_reais     = B_reais_ha * (exp(tau_p25)     - 1),
+    tau_mediano_reais = B_reais_ha * (exp(tau_mediano) - 1),
+    tau_p75_reais     = B_reais_ha * (exp(tau_p75)     - 1)
+  ) |>
+  dplyr::select(grupo, estrato, n,
+                tau_medio_reais, tau_p25_reais, tau_mediano_reais, tau_p75_reais)
+
+print(subgrupos_reais)
+readr::write_csv(
+  subgrupos_reais,
+  file.path(dir_resultados, "cf_ate_por_subgrupo_reais.csv")
+)
+
+
+# =============================================================================
+# 12. Graficos: distribuicao do CATE e CATE por regiao
 # =============================================================================
 
 g_hist <- ggplot2::ggplot(
@@ -473,9 +583,41 @@ ggplot2::ggsave(
   width    = 9, height = 5, dpi = 300
 )
 
+# Versao paralela em R$/ha — mesma estrutura, eixo y reescalado
+g_box_reais <- ggplot2::ggplot(
+    cate_munic_reais,
+    ggplot2::aes(x = regiao, y = tau_reais, fill = regiao)
+  ) +
+  ggplot2::geom_boxplot(alpha = 0.7, outlier.size = 0.7) +
+  ggplot2::geom_hline(yintercept = 0, linetype = 2) +
+  ggplot2::labs(
+    title = "CATE estimado por macrorregiao (R$/ha)",
+    x     = "Macrorregiao",
+    y     = "tau(X) em R$/ha"
+  ) +
+  ggplot2::theme_minimal(base_size = 12) +
+  ggplot2::theme(legend.position = "none")
+
+ggplot2::ggsave(
+  filename = file.path(dir_resultados, "cf_cate_por_regiao_reais.png"),
+  plot     = g_box_reais,
+  width    = 9, height = 5, dpi = 300
+)
+
 
 # =============================================================================
-# 12. Fim
+# 13. Fim
+# =============================================================================
+
+message("Resultados salvos em: ", dir_resultados)
+s.png"),
+  plot     = g_box_reais,
+  width    = 9, height = 5, dpi = 300
+)
+
+
+# =============================================================================
+# 13. Fim
 # =============================================================================
 
 message("Resultados salvos em: ", dir_resultados)
