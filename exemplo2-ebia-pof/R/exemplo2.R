@@ -439,13 +439,29 @@ coef_logit <- as.data.frame(as.table(coef_mat)) |>
     conf.high = exp(beta + 1.96 * se)
   )
 
+# Variáveis numéricas aparecem em coef_logit$term com o próprio nome
+# (ex.: "percapita_mil"). Variáveis fatoriais aparecem como o nome da
+# variável concatenado ao nível usado como contraste (ex.: "situacao_dom"
+# -> "situacao_domUrbano"). Para que todas as variáveis de top5_vars sejam
+# localizadas em coef_logit, buscamos o termo exato e, se não existir,
+# o(s) termo(s) cujo nome começa com o nome da variável.
+termos_top5 <- character(0)
+for (v in top5_vars) {
+  if (v %in% coef_logit$term) {
+    termos_top5 <- c(termos_top5, v)
+  } else {
+    termos_v <- grep(paste0("^", v), unique(coef_logit$term), value = TRUE)
+    termos_top5 <- c(termos_top5, termos_v)
+  }
+}
+
 odds_ratios <- coef_logit |>
   dplyr::filter(
-    term %in% top5_vars,
+    term %in% termos_top5,
     term != "(Intercept)"
   ) |>
   dplyr::mutate(
-    term    = factor(term,    levels = top5_vars),
+    term    = factor(term,    levels = termos_top5),
     y.level = factor(
       y.level,
       levels = c(
@@ -463,11 +479,12 @@ readr::write_csv(
 
 # Mapeamento de nomes de variáveis para rótulos legíveis no gráfico
 labels_termos <- c(
-  percapita_mil = "Renda per capita (R$ mil)",
-  num_comodos   = "Número de cômodos",
-  num_banheiros = "Número de banheiros",
-  num_moradores = "Número de moradores",
-  fontes_renda  = "Número de fontes de renda"
+  percapita_mil      = "Renda per capita (R$ mil)",
+  num_comodos        = "Número de cômodos",
+  num_banheiros      = "Número de banheiros",
+  num_moradores      = "Número de moradores",
+  fontes_renda       = "Número de fontes de renda",
+  situacao_domUrbano = "Domicílio Urbano"
 )
 
 grafico_or <- ggplot2::ggplot(
