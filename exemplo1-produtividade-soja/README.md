@@ -389,7 +389,7 @@ e mencione este repositório:
 
 > Repositório de apoio ao Exemplo 1 — Previsão da produtividade da soja
 > em municípios brasileiros. Disponível em:
-> `https://github.com/luizsatolo/livro-les-cap-ml.git (pasta `exemplo1-produtividade-soja/`)`
+> `https://github.com/luizsatolo/livro-les-cap-ml.git` (pasta `exemplo1-produtividade-soja/`)
 
 ---
 
