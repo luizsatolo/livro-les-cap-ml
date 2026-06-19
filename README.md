@@ -34,13 +34,13 @@ estrutura interna:
 ```
 livro-les-cap-ml/
 ├── README.md                                  (este arquivo)
-├── LICENSE                                    (MIT)
+├── LICENSE                                    
 ├── .gitignore
 ├── exemplo1-produtividade-soja/
-│   ├── README.md                              (passo a passo do Exemplo 1)
+│   ├── README.md                              
 │   ├── R/exemplo1.R
 │   ├── dados/base_final.csv
-│   └── resultados_modelos/                    (saídas geradas pelo script)
+│   └── resultados_modelos/                    
 ├── exemplo2-ebia-pof/
 │   ├── README.md
 │   ├── R/exemplo2.R
