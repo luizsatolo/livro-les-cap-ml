@@ -1,9 +1,10 @@
-# Machine Learning e Avaliação de Impacto em Economia — material suplementar
+# Da previsão à causalidade: integrando Aprendizado de Máquinas e Econometria na avaliação de políticas de desenvolvimento econômico.
 
-Repositório oficial dos dados e scripts em R que reproduzem os quatro
-exemplos aplicados do capítulo **"Machine Learning e Avaliação de Impacto
-em Economia: Fundamentos, Conexões e Aplicações"**, de Ana Lúcia Kassouf
-(ESALQ/USP) e Luiz Fernando Satolo (ITA), publicado no livro **(no prelo)**.
+Repositório oficial dos dados e scripts em R que reproduzem os quatro exemplos
+aplicados do capítulo **"Da previsão à causalidade: integrando Aprendizado de Máquinas e
+Econometria na avaliação de políticas de desenvolvimento econômico"**, de Ana Lúcia Kassouf
+(ESALQ/USP) e Luiz Fernando Satolo (ITA), publicado no livro **Conexões LES: Diálogos Interdisciplinares 
+nas Ciências Sociais Aplicadas, Volume I**.
 
 O capítulo posiciona o aprendizado de máquina (*Machine Learning*, ML)
 como complemento — e não substituto — da econometria causal e ilustra,
@@ -151,16 +152,18 @@ variáveis e o tratamento aplicado a cada base.
 
 ## Como citar
 
-> Kassouf, A. L., & Satolo, L. F. (2026). *Machine Learning e Avaliação
-> de Impacto em Economia: Fundamentos, Conexões e Aplicações*. In *[no
+> Kassouf, A. L., & Satolo, L. F. (2026). *Da previsão à causalidade:
+> integrando Aprendizado de Máquinas e Econometria na
+> avaliação de políticas de desenvolvimento econômico*. In *[no
 > prelo]*.
 
 Para citar o repositório de código e dados:
 
 > Kassouf, A. L., & Satolo, L. F. (2026). *livro-les-cap-ml: dados e
-> scripts dos exemplos do capítulo Machine Learning e Avaliação de
-> Impacto em Economia* (versão 1.0). Disponível em:
-> https://github.com/luizsatolo/livro-les-cap-ml.
+> scripts dos exemplos do capítulo Da previsão à causalidade:
+> integrando Aprendizado de Máquinas e Econometria na
+> avaliação de políticas de desenvolvimento econômico* (versão 1.0). 
+> Disponível em: https://github.com/luizsatolo/livro-les-cap-ml.
 
 ---
 
