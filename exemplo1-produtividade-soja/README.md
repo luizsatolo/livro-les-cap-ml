@@ -1,7 +1,7 @@
 # Exemplo 1 — Previsão da produtividade da soja em municípios brasileiros
 
-Material de apoio do **Exemplo 1** do capítulo *"Machine Learning em Avaliação
-de Impacto na Economia"*. O exemplo compara três estratégias para prever a
+Material de apoio do **Exemplo 1** do capítulo *"Da previsão à causalidade: integrando Aprendizado de Máquinas e Econometria na
+avaliação de políticas de desenvolvimento econômico"*. O exemplo compara três estratégias para prever a
 produtividade da soja (kg/ha) em municípios brasileiros no período
 2004–2021, combinando técnicas de econometria de painel com regressão
 penalizada.
