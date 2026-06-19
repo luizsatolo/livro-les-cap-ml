@@ -1,7 +1,7 @@
 # Exemplo 3 — Efeito do PRONAF sobre a produtividade do milho municipal via Double/Debiased Machine Learning (painel 2013–2021)
 
-Material de apoio do **Exemplo 3** do capítulo *"Machine Learning em
-Avaliação de Impacto na Economia"*, ilustrando a seção 5.2
+Material de apoio do **Exemplo 3** do capítulo *"Da previsão à causalidade: integrando Aprendizado de Máquinas e Econometria na
+avaliação de políticas de desenvolvimento econômico"*, ilustrando a seção 5.2
 (Double/Debiased Machine Learning). O exemplo estima, em **painel anual
 2013–2021**, o efeito causal da intensidade de exposição ao **Programa
 Nacional de Fortalecimento da Agricultura Familiar (PRONAF)** sobre a
@@ -448,7 +448,7 @@ E mencione este repositório:
 > Repositório de apoio ao Exemplo 3 — Efeito do PRONAF sobre a
 > produtividade do milho municipal via Double/Debiased Machine
 > Learning, painel 2013-2021. Disponível em:
-> `https://github.com/luizsatolo/livro-les-cap-ml (pasta `exemplo3-pronaf-dml/`)`
+> `https://github.com/luizsatolo/livro-les-cap-ml` (pasta `exemplo3-pronaf-dml/`)
 
 ---
 
