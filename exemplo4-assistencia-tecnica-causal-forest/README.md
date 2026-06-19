@@ -1,7 +1,7 @@
 # Exemplo 4 — Efeitos heterogêneos da assistência técnica agrícola sobre a produtividade agropecuária municipal via Causal Forest (cross-section 2017)
 
-Material de apoio do **Exemplo 4** do capítulo *"Machine Learning em
-Avaliação de Impacto na Economia"*, ilustrando a seção 5.3
+Material de apoio do **Exemplo 4** do capítulo *"Da previsão à causalidade: integrando Aprendizado de Máquinas e Econometria na
+avaliação de políticas de desenvolvimento econômico"*, ilustrando a seção 5.3
 (Causal Forest e Efeitos Heterogêneos do Tratamento). O exemplo estima,
 em **cross-section municipal de 2017**, o efeito da exposição à
 **assistência/orientação técnica** sobre a **produtividade
@@ -520,7 +520,7 @@ E mencione este repositório:
 > Repositório de apoio ao Exemplo 4 — Efeitos heterogêneos da
 > assistência técnica agrícola sobre a produtividade agropecuária
 > municipal via Causal Forest, cross-section 2017. Disponível em:
-> `https://github.com/luizsatolo/livro-les-cap-ml (pasta `exemplo4-assistencia-tecnica-causal-forest/`)`
+> `https://github.com/luizsatolo/livro-les-cap-ml` (pasta `exemplo4-assistencia-tecnica-causal-forest/`)
 
 ---
 
