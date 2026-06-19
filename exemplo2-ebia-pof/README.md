@@ -1,7 +1,7 @@
 # Exemplo 2 — Classificação de (in)segurança alimentar em domicílios brasileiros (POF 2017-2018)
 
-Material de apoio do **Exemplo 2** do capítulo *"Machine Learning em
-Avaliação de Impacto na Economia"*. O exemplo compara dois modelos de
+Material de apoio do **Exemplo 2** do capítulo *"Da previsão à causalidade: integrando Aprendizado de Máquinas e Econometria na
+avaliação de políticas de desenvolvimento econômico"*. O exemplo compara dois modelos de
 classificação multinomial — **regressão logística multinomial** e
 **Random Forest** — para prever a classe da **Escala Brasileira de
 Insegurança Alimentar (EBIA)** em domicílios da Pesquisa de Orçamentos
@@ -373,7 +373,7 @@ e mencione este repositório:
 
 > Repositório de apoio ao Exemplo 2 — Classificação de (in)segurança
 > alimentar em domicílios brasileiros (POF 2017-2018). Disponível em:
-> `https://github.com/luizsatolo/livro-les-cap-ml.git (pasta `exemplo2-ebia-pof/`)`
+> `https://github.com/luizsatolo/livro-les-cap-ml.git` (pasta `exemplo2-ebia-pof/`)
 
 ---
 
